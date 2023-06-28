@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/cryptoListFragment">
+
+    <fragment
+        android:id="@+id/cryptoListFragment"
+        android:name="com.isaruff.cryptotrackerapp.presentation.screens.crypto_list.CryptoListFragment"
+        android:label="fragment_crypto_list"
+        tools:layout="@layout/fragment_crypto_list" >
+        <action
+            android:id="@+id/action_cryptoListFragment_to_rateSelectionFragment"
+            app:destination="@id/rateSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateSelectionFragment"
+        android:name="com.isaruff.cryptotrackerapp.presentation.screens.rate_selection.RateSelectionFragment"
+        android:label="fragment_rate_selection"
+        tools:layout="@layout/fragment_rate_selection" />
+    <fragment
+        android:id="@+id/cryptoHistoryFragment"
+        android:name="com.isaruff.cryptotrackerapp.presentation.screens.cyrpto_history.CryptoHistoryFragment"
+        android:label="fragment_crypto_history"
+        tools:layout="@layout/fragment_crypto_history" />
+</navigation>
