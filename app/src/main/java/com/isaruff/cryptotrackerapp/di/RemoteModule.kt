@@ -35,9 +35,9 @@ class RemoteModule {
     @Singleton
     fun provideOkhttpClient(): OkHttpClient {
         val httpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
-            .callTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .callTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
 
         return httpBuilder.build()
     }
