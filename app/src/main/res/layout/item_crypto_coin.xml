@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/color_primary"
+    app:cardCornerRadius="5dp"
+    app:strokeColor="@color/color_primary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="5dp"
+        android:paddingEnd="10dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="30dp"
+            android:background="@color/color_secondary"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewCoinStatus"
+            android:layout_width="6dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="0dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_vertical_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/color_tertiary" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewCoin"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageViewCoinStatus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/roundedImageView"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/textViewCoinName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imageViewCoin"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Coin Name" />
+
+        <TextView
+            android:id="@+id/textViewCoinInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_secondary_variant"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/textViewCoinName"
+            app:layout_constraintTop_toBottomOf="@id/textViewCoinName"
+            android:text="Current price:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCoinPrice"
+            app:layout_constraintStart_toEndOf="@id/textViewCoinInfo"
+            app:layout_constraintTop_toTopOf="@id/textViewCoinInfo"
+            app:layout_constraintBottom_toBottomOf="@id/textViewCoinInfo"
+            tools:text = "1"
+            android:textSize="12sp"
+            android:textColor="@color/color_tertiary"
+            android:layout_marginStart="5dp"/>
+
+        <ImageView
+            android:id="@+id/imageViewFlag"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_updated"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textViewCoinName"
+            app:layout_constraintTop_toTopOf="@id/textViewLastUpdatedTitle"
+            app:tint="@color/yellow" />
+
+
+        <TextView
+            android:id="@+id/textViewLastUpdatedTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="5dp"
+            android:text="Last updated"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageViewFlag"
+            app:layout_constraintTop_toBottomOf="@id/textViewCoinInfo" />
+
+        <TextView
+            android:id="@+id/textViewLastUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/green"
+            app:layout_constraintBottom_toBottomOf="@id/textViewLastUpdatedTitle"
+            app:layout_constraintStart_toEndOf="@id/textViewLastUpdatedTitle"
+            app:layout_constraintTop_toTopOf="@id/textViewLastUpdatedTitle"
+            tools:text="12.12.2023" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

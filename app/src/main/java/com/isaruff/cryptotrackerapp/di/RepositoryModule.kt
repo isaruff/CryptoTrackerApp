@@ -1,6 +1,6 @@
 package com.isaruff.cryptotrackerapp.di
 
-import com.isaruff.cryptotrackerapp.data.repository.CoinRepository
+import com.isaruff.cryptotrackerapp.data.remote.repository.CoinRepository
 import com.isaruff.cryptotrackerapp.domain.repository.CoinRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -13,7 +13,6 @@ import javax.inject.Singleton
 interface RepositoryModule {
 
     @Binds
-    @Singleton
     fun bindCoinRepository(impl: CoinRepositoryImpl): CoinRepository
 
 }

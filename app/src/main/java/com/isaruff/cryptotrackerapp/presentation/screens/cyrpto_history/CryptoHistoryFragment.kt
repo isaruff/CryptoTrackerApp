@@ -6,16 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.isaruff.cryptotrackerapp.R
+import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoHistoryBinding
+import com.isaruff.cryptotrackerapp.presentation.base.BaseFragment
 
 
-class CryptoHistoryFragment : Fragment() {
+class CryptoHistoryFragment : BaseFragment<FragmentCryptoHistoryBinding>(FragmentCryptoHistoryBinding::inflate) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crypto_history, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 

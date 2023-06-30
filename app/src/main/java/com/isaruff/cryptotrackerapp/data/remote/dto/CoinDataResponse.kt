@@ -1,4 +1,4 @@
-package com.isaruff.cryptotrackerapp.data.dto
+package com.isaruff.cryptotrackerapp.data.remote.dto
 
 data class CoinDataResponse(
     val btc: String,

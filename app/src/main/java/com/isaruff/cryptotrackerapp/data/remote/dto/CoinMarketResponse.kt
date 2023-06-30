@@ -1,6 +1,7 @@
-package com.isaruff.cryptotrackerapp.data.dto
+package com.isaruff.cryptotrackerapp.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
+import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
 
 
 data class CoinMarketResponse(
@@ -15,40 +16,40 @@ data class CoinMarketResponse(
     @SerializedName("atl_date")
     val atlDate: String,
     @SerializedName("circulating_supply")
-    val circulatingSupply: Int,
+    val circulatingSupply: Double,
     @SerializedName("current_price")
-    val currentPrice: Int,
+    val currentPrice: Double,
     @SerializedName("fully_diluted_valuation")
-    val fullyDilutedValuation: Int,
+    val fullyDilutedValuation: Double,
     @SerializedName("high_24h")
-    val high24h: Int,
+    val high24h: Double,
     val id: String,
     val image: String,
     @SerializedName("last_updated")
     val lastUpdated: String,
     @SerializedName("low_24h")
-    val low24h: Int,
+    val low24h: Double,
     @SerializedName("market_cap")
-    val marketCap: Int,
+    val marketCap: Double,
     @SerializedName("market_cap_change_24h")
-    val marketCapChange24h: Int,
+    val marketCapChange24h: Double,
     @SerializedName("market_cap_change_percentage_24h")
     val marketCapChangePercentage24h: Double,
     @SerializedName("market_cap_rank")
-    val marketCapRange: Int,
+    val marketCapRange: Double,
     @SerializedName("max_supply")
-    val maxSupply: Int,
+    val maxSupply: Double,
     val name: String,
     @SerializedName("price_change_24h")
-    val priceChange24h: Int,
+    val priceChange24h: Double,
     @SerializedName("price_change_percentage_1h_in_currency")
-    val priceChangePercentage1hInCurrency: Int,
+    val priceChangePercentage1hInCurrency: Double,
     @SerializedName("price_change_percentage_24h")
-    val priceChangePercentage24h: Int,
+    val priceChangePercentage24h: Double,
     val roi: Any,
     val symbol: String,
     @SerializedName("total_supply")
-    val totalSupply: Int,
+    val totalSupply: Double,
     @SerializedName("total_volume")
-    val totalVolume: Int
+    val totalVolume: Double
 )

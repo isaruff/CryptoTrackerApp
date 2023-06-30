@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KanitTextViewStyle" parent="android:Widget.TextView">
+        <item name="fontFamily">@font/kanit_light</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/TextInputLayoutShapeOverlay</item>
+        <item name="boxStrokeColor">@color/color_box_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">#79A2A4A5</item>
+    </style>
+
+    <style name="TextInputLayoutShapeOverlay">
+        <item name="cornerSize">10dp</item>
+    </style>
+
+</resources>

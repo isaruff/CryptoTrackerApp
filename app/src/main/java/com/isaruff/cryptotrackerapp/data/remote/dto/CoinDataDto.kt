@@ -1,9 +1,9 @@
-package com.isaruff.cryptotrackerapp.data.dto
+package com.isaruff.cryptotrackerapp.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
 
-data class CoinDataRequestModel(
+data class CoinDataDto(
     val ids: String,
     @SerializedName("vs_currencies")
     var currencies: String = "btc,eth,xrp",

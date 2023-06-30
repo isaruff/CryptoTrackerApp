@@ -3,7 +3,7 @@ package com.isaruff.cryptotrackerapp.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.isaruff.cryptotrackerapp.common.Constants.BASE_URL
-import com.isaruff.cryptotrackerapp.data.remote.CoinGeckoService
+import com.isaruff.cryptotrackerapp.data.remote.service.CoinGeckoService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,11 +20,12 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson, HttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(gson: Gson, httpClient: OkHttpClient): Retrofit {
         val retrofitInstance = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
-            .client(HttpClient)
+            .client(httpClient)
+
 
         return retrofitInstance.build()
 
@@ -43,11 +44,12 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideMoshiConverter(): Gson = GsonBuilder().create()
+    fun provideGsonConverter(): Gson = GsonBuilder().create()
 
 
     @Provides
     @Singleton
-    fun provideCoinApi(retrofit: Retrofit) : CoinGeckoService= retrofit.create(CoinGeckoService::class.java)
+    fun provideCoinApi(retrofit: Retrofit): CoinGeckoService =
+        retrofit.create(CoinGeckoService::class.java)
 
 }
