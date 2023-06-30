@@ -1,9 +1,14 @@
 package com.isaruff.cryptotrackerapp.common
 
+import android.util.Log
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import com.google.gson.Gson
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinDataResponse
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import org.json.JSONObject
+import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -40,5 +45,18 @@ fun convertUTCtoLocal(utcTime: String): String {
         localFormat.format(utcDate)
     } else {
         utcTime
+    }
+}
+
+//Avoiding crashing while Navigating in very rapid manner
+fun NavController.safeNavigate(directions: NavDirections, extras: Navigator.Extras?=null){
+    try {
+        if (extras==null){
+            this.navigate(directions)
+        } else{
+            this.navigate(directions, extras)
+        }
+    }catch (e:Exception){
+        Log.e("NAVIGATION_ERROR", e.toString())
     }
 }

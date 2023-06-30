@@ -2,6 +2,7 @@ package com.isaruff.cryptotrackerapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.isaruff.cryptotrackerapp.data.local.dao.CoinMarketsCacheDao
 import com.isaruff.cryptotrackerapp.data.local.dao.TrackedCoinDao
 import com.isaruff.cryptotrackerapp.data.local.room.CoinDatabase
 import dagger.Module
@@ -14,6 +15,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class LocalModule {
+
+    @Provides
+    @Singleton
+    fun provideCoinMarketsCacheDao(database: CoinDatabase): CoinMarketsCacheDao{
+        return database.getCoinMarketsDao()
+    }
 
     @Provides
     @Singleton

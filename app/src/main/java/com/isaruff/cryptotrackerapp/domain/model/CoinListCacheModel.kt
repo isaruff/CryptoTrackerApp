@@ -1,8 +1,6 @@
 package com.isaruff.cryptotrackerapp.domain.model
 
-import com.google.gson.annotations.SerializedName
-
-data class CoinListModel(
+data class CoinListCacheModel(
     val id: String,
     val image: String,
     val lastUpdated: String,

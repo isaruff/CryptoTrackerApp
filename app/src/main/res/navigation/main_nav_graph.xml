@@ -15,13 +15,17 @@
             app:destination="@id/rateSelectionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/rateSelectionFragment"
-        android:name="com.isaruff.cryptotrackerapp.presentation.screens.rate_selection.RateSelectionFragment"
-        android:label="fragment_rate_selection"
-        tools:layout="@layout/fragment_rate_selection" />
-    <fragment
         android:id="@+id/cryptoHistoryFragment"
         android:name="com.isaruff.cryptotrackerapp.presentation.screens.cyrpto_history.CryptoHistoryFragment"
         android:label="fragment_crypto_history"
         tools:layout="@layout/fragment_crypto_history" />
+    <dialog
+        android:id="@+id/rateSelectionFragment"
+        android:name="com.isaruff.cryptotrackerapp.presentation.screens.rate_selection.RateSelectionFragment"
+        android:label="fragment_rate_selection"
+        tools:layout="@layout/fragment_rate_selection" >
+        <argument
+            android:name="coin_details"
+            app:argType="com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel" />
+    </dialog>
 </navigation>

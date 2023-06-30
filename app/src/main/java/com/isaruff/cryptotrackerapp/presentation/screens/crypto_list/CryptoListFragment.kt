@@ -15,14 +15,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.whenCreated
 import androidx.lifecycle.whenStarted
+import androidx.navigation.fragment.findNavController
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.isaruff.cryptotrackerapp.R
 import com.isaruff.cryptotrackerapp.common.Resource
 import com.isaruff.cryptotrackerapp.common.convertUTCtoLocal
 import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
+import com.isaruff.cryptotrackerapp.common.safeNavigate
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoListBinding
 import com.isaruff.cryptotrackerapp.databinding.ItemCryptoCoinBinding
+import com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel
 import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
 import com.isaruff.cryptotrackerapp.presentation.adapter.GenericListAdapter
 import com.isaruff.cryptotrackerapp.presentation.base.BaseFragment
@@ -55,6 +59,18 @@ class CryptoListFragment :
                     requireContext(), selectedCurrency.currencyColor
                 )
 
+                this.root.setOnClickListener {
+                    findNavController().safeNavigate(
+                        directions = CryptoListFragmentDirections.actionCryptoListFragmentToRateSelectionFragment(
+                            coinDetails = CoinDetailsModel(
+                                id = data.id,
+                                name = data.name,
+                                image = data.image
+                            )
+                        )
+                    )
+                }
+
 
             }
         )
@@ -80,11 +96,7 @@ class CryptoListFragment :
         observeState(viewModel.coinListState) {
             when (it) {
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error Code ${it.responseCode}\n${it.errorDescription}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Snackbar.make(binding.root, "Request Error, Loading Cache", Snackbar.LENGTH_LONG).show()
                 }
 
                 is Resource.Loading -> {
@@ -131,7 +143,7 @@ class CryptoListFragment :
     private fun searchCoin() {
         binding.editTextSearch.addTextChangedListener { searchText ->
             viewModel.searchCoin(searchText.toString())
-            observeState(viewModel.coinSearchResult){
+            observeState(viewModel.coinSearchResult) {
                 adapter.submitList(it)
             }
 

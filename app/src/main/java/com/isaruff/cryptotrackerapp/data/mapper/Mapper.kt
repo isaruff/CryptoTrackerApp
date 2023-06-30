@@ -1,6 +1,8 @@
 package com.isaruff.cryptotrackerapp.data.mapper
 
+import com.isaruff.cryptotrackerapp.data.local.entities.CoinMarketsCacheEntity
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
+import com.isaruff.cryptotrackerapp.domain.model.CoinListCacheModel
 import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
 
 fun CoinMarketResponse.toCoinListModel(): CoinListModel {
@@ -8,9 +10,19 @@ fun CoinMarketResponse.toCoinListModel(): CoinListModel {
         id = id,
         image = image,
         lastUpdated = lastUpdated,
-        marketCap = marketCap,
         name = name,
-        priceChangePercentage1hInCurrency = priceChangePercentage1hInCurrency,
-        currentPrice = currentPrice
+        currentPrice = currentPrice,
+        currency = ""
+    )
+}
+
+fun CoinMarketsCacheEntity.toCoinListModel(): CoinListModel{
+    return CoinListModel(
+        id = id,
+        image = image,
+        lastUpdated = lastUpdated,
+        name = name,
+        currentPrice = currentPrice,
+        currency = currency
     )
 }
