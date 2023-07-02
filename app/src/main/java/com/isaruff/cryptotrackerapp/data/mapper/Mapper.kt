@@ -1,8 +1,9 @@
 package com.isaruff.cryptotrackerapp.data.mapper
 
 import com.isaruff.cryptotrackerapp.data.local.entities.CoinMarketsCacheEntity
+import com.isaruff.cryptotrackerapp.data.local.entities.TrackedCoinEntity
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
-import com.isaruff.cryptotrackerapp.domain.model.CoinListCacheModel
+import com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel
 import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
 
 fun CoinMarketResponse.toCoinListModel(): CoinListModel {
@@ -12,7 +13,8 @@ fun CoinMarketResponse.toCoinListModel(): CoinListModel {
         lastUpdated = lastUpdated,
         name = name,
         currentPrice = currentPrice,
-        currency = ""
+        currency = "",
+        sparklineList = sparklineIn7Days.price
     )
 }
 
@@ -23,6 +25,8 @@ fun CoinMarketsCacheEntity.toCoinListModel(): CoinListModel{
         lastUpdated = lastUpdated,
         name = name,
         currentPrice = currentPrice,
-        currency = currency
+        currency = currency,
+        sparklineList = sparklineList
     )
 }
+

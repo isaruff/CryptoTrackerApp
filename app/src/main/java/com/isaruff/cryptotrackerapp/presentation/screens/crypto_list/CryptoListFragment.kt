@@ -1,29 +1,16 @@
 package com.isaruff.cryptotrackerapp.presentation.screens.crypto_list
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.whenCreated
-import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.snackbar.Snackbar
-import com.isaruff.cryptotrackerapp.R
 import com.isaruff.cryptotrackerapp.common.Resource
 import com.isaruff.cryptotrackerapp.common.convertUTCtoLocal
 import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
 import com.isaruff.cryptotrackerapp.common.safeNavigate
-import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoListBinding
 import com.isaruff.cryptotrackerapp.databinding.ItemCryptoCoinBinding
 import com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel
@@ -32,13 +19,6 @@ import com.isaruff.cryptotrackerapp.presentation.adapter.GenericListAdapter
 import com.isaruff.cryptotrackerapp.presentation.base.BaseFragment
 import com.isaruff.cryptotrackerapp.presentation.views.changeBackgroundColor
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CryptoListFragment :
@@ -47,7 +27,7 @@ class CryptoListFragment :
     private val viewModel: CryptoListViewModel by viewModels()
     private lateinit var selectedCurrency: CurrencyTypes
 
-    private val adapter by lazy {
+    private val coinMarketsAdapter by lazy {
         GenericListAdapter<CoinListModel, ItemCryptoCoinBinding>(
             inflate = ItemCryptoCoinBinding::inflate,
             onBind = { data, _ ->
@@ -65,7 +45,8 @@ class CryptoListFragment :
                             coinDetails = CoinDetailsModel(
                                 id = data.id,
                                 name = data.name,
-                                image = data.image
+                                image = data.image,
+                                idWithCurrency = "${data.currency}_${data.id}"
                             )
                         )
                     )
@@ -79,12 +60,12 @@ class CryptoListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setInitialCurrency()
+        setCurrency()
         searchCoin()
         binding.initClickListeners()
     }
 
-    private fun setInitialCurrency() {
+    private fun setCurrency() {
         observeState(viewModel.selectedCurrency) {
             selectedCurrency = it
         }
@@ -92,11 +73,19 @@ class CryptoListFragment :
 
 
     private fun setupRecyclerView() {
-        binding.recyclerViewCoinList.adapter = adapter
+        binding.recyclerViewCoinList.apply {
+            adapter = coinMarketsAdapter
+            setHasFixedSize(true)
+            setItemViewCacheSize(15)
+        }
         observeState(viewModel.coinListState) {
             when (it) {
                 is Resource.Error -> {
-                    Snackbar.make(binding.root, "Request Error, Loading Cache", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        binding.root,
+                        "${it.errorDescription}",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
 
                 is Resource.Loading -> {
@@ -107,7 +96,7 @@ class CryptoListFragment :
                 is Resource.Success -> {
                     binding.root.isEnabled = true
                     binding.progressBar.root.visibility = View.GONE
-                    adapter.submitList(it.data ?: emptyList())
+                    coinMarketsAdapter.submitList(it.data ?: emptyList())
                 }
             }
         }
@@ -116,26 +105,24 @@ class CryptoListFragment :
     }
 
     private fun FragmentCryptoListBinding.initClickListeners() {
+        buttonCurrencyUSD.setOnClickListener {
+            viewModel.getCoinList(CurrencyTypes.USD.currency)
+            viewModel.setCurrency(CurrencyTypes.USD)
+
+        }
         buttonCurrencyBitcoin.setOnClickListener {
             viewModel.getCoinList(CurrencyTypes.BITCOIN.currency)
             viewModel.setCurrency(CurrencyTypes.BITCOIN)
-            observeState(viewModel.selectedCurrency) {
-                selectedCurrency = it
-            }
+
         }
         buttonCurrencyEthereum.setOnClickListener {
             viewModel.getCoinList(CurrencyTypes.ETHEREUM.currency)
             viewModel.setCurrency(CurrencyTypes.ETHEREUM)
-            observeState(viewModel.selectedCurrency) {
-                selectedCurrency = it
-            }
+
         }
         buttonCurrencyRipple.setOnClickListener {
             viewModel.getCoinList(CurrencyTypes.RIPPLE.currency)
             viewModel.setCurrency(CurrencyTypes.RIPPLE)
-            observeState(viewModel.selectedCurrency) {
-                selectedCurrency = it
-            }
         }
     }
 
@@ -144,7 +131,7 @@ class CryptoListFragment :
         binding.editTextSearch.addTextChangedListener { searchText ->
             viewModel.searchCoin(searchText.toString())
             observeState(viewModel.coinSearchResult) {
-                adapter.submitList(it)
+                coinMarketsAdapter.submitList(it)
             }
 
         }

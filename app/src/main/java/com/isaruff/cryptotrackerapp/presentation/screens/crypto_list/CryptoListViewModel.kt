@@ -1,5 +1,6 @@
 package com.isaruff.cryptotrackerapp.presentation.screens.crypto_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaruff.cryptotrackerapp.common.Resource
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -30,7 +32,7 @@ class CryptoListViewModel @Inject constructor(
     private val _coinListState = MutableStateFlow<Resource<List<CoinListModel>>>(Resource.Loading())
     val coinListState = _coinListState.asStateFlow()
 
-    private val _selectedCurrency = MutableStateFlow(CurrencyTypes.BITCOIN)
+    private val _selectedCurrency = MutableStateFlow(CurrencyTypes.USD)
     val selectedCurrency = _selectedCurrency.asStateFlow()
 
     private val _coinListCache = MutableStateFlow<List<CoinListModel>>(emptyList())
@@ -39,11 +41,11 @@ class CryptoListViewModel @Inject constructor(
     val coinSearchResult = _coinSearchResult.asStateFlow()
 
     init {
-        getCoinList("btc")
+        getCoinList("usd")
     }
 
     private fun getCacheFromDatabase() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val currency = _selectedCurrency.value.currency
             _coinListState.value = Resource.Loading()
             getCacheCoinsUseCase.invoke(currency).collect {
@@ -51,14 +53,14 @@ class CryptoListViewModel @Inject constructor(
                 it.forEach { coinCache ->
                     convertedList.add(coinCache.toCoinListModel())
                 }
+                _coinListCache.value = convertedList
                 _coinListState.value = Resource.Success(data = convertedList)
             }
-
         }
     }
 
     private fun setCacheToDatabase(coinListModel: CoinListModel) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val currency = _selectedCurrency.value.currency
             upsertCacheCoinUseCase.invoke(
                 coinMarketsCacheEntity = CoinMarketsCacheEntity(
@@ -68,7 +70,8 @@ class CryptoListViewModel @Inject constructor(
                     lastUpdated = coinListModel.lastUpdated,
                     currency = currency,
                     currentPrice = coinListModel.currentPrice,
-                    idWithCurrency = "${currency}_${coinListModel.id}"
+                    idWithCurrency = "${currency}_${coinListModel.id}",
+                    sparklineList = coinListModel.sparklineList
                 )
             )
         }
@@ -98,11 +101,11 @@ class CryptoListViewModel @Inject constructor(
     fun getCoinList(currency: String) {
         //Side note: Implement paging in the future, but API request limit is a major issue
         //Downside: also does not fully follow Clean Architecture
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val coinListResult = getCoinListUseCase.invoke(
                 params = CoinMarketsDto(
                     currency = currency,
-                    order = "market_cap_dsc",
+                    order = "market_cap_desc",
                     perPage = 50
                 )
 
@@ -110,11 +113,19 @@ class CryptoListViewModel @Inject constructor(
             coinListResult.collect {
                 when (it) {
                     is Resource.Error -> {
+                        val errorMessage =
+                            if (it.responseCode == 429) "Request limit for markets has been reached loading cache" else it.errorDescription
+                                ?: ""
                         _coinListState.value = Resource.Error(
                             errorCode = it.responseCode,
-                            errorDescription = it.errorDescription
+                            errorDescription = errorMessage
                         )
-                        getCacheFromDatabase()
+                        try {
+                            getCacheFromDatabase()
+                        }catch (e: Exception){
+                            Log.d("Cache_error", "$e")
+                        }
+
                     }
 
                     is Resource.Loading -> _coinListState.value = Resource.Loading()

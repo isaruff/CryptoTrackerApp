@@ -51,5 +51,11 @@ data class CoinMarketResponse(
     @SerializedName("total_supply")
     val totalSupply: Double,
     @SerializedName("total_volume")
-    val totalVolume: Double
+    val totalVolume: Double,
+    @SerializedName("sparkline_in_7d")
+    val sparklineIn7Days: SparklineList
+)
+
+data class SparklineList(
+    val price: List<Double>
 )

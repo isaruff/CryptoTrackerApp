@@ -17,5 +17,9 @@ class CoinMarketsCacheRepositoryImpl @Inject constructor(
         dao.upsertCoinMarkets(coinMarket)
     }
 
+    override fun getMarketsByUniqueId(id: String): Flow<CoinMarketsCacheEntity> {
+        return dao.getMarketsByUniqueId(id)
+    }
+
 
 }

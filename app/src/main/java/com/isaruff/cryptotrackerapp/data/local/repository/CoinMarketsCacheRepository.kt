@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface CoinMarketsCacheRepository {
     suspend fun getMarketsListByCurrency(currency: String): Flow<List<CoinMarketsCacheEntity>>
 
-    @Upsert
+
     suspend fun upsertCoinMarkets(coinMarket: CoinMarketsCacheEntity)
+
+    fun getMarketsByUniqueId(id: String): Flow<CoinMarketsCacheEntity>
 
 }

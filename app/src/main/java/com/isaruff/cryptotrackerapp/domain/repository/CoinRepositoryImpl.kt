@@ -1,6 +1,5 @@
 package com.isaruff.cryptotrackerapp.domain.repository
 
-import com.isaruff.cryptotrackerapp.data.remote.dto.CoinDataDto
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
 import com.isaruff.cryptotrackerapp.data.remote.service.CoinGeckoService
@@ -16,6 +15,7 @@ class CoinRepositoryImpl @Inject constructor(
             currency = params.currency,
             ids = params.ids,
             order = params.order,
+            sparkline = params.sparkline,
             perPage = params.perPage,
             page = params.page,
             priceChangePercentage = params.priceChangePercentage,
@@ -24,8 +24,9 @@ class CoinRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getCoinData(body: CoinDataDto): Response<String> {
-        return coinApi.getCoinData()
+    override suspend fun getSimpleCoinData(currencies: String, ids: String): Response<String> {
+        return coinApi.getSimpleCoinData(currencies, ids)
     }
+
 
 }

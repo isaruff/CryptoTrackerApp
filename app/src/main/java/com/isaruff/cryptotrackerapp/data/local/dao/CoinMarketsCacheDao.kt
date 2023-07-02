@@ -16,5 +16,8 @@ interface CoinMarketsCacheDao {
     @Upsert
     suspend fun upsertCoinMarkets(coinMarket: CoinMarketsCacheEntity)
 
+    @Query("select * from coin_markets_cache_table where idWithCurrency =:id")
+    fun getMarketsByUniqueId(id: String): Flow<CoinMarketsCacheEntity>
+
 
 }

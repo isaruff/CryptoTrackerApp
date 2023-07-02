@@ -18,7 +18,11 @@
         android:id="@+id/cryptoHistoryFragment"
         android:name="com.isaruff.cryptotrackerapp.presentation.screens.cyrpto_history.CryptoHistoryFragment"
         android:label="fragment_crypto_history"
-        tools:layout="@layout/fragment_crypto_history" />
+        tools:layout="@layout/fragment_crypto_history" >
+        <argument
+            android:name="id_with_currency"
+            app:argType="string" />
+    </fragment>
     <dialog
         android:id="@+id/rateSelectionFragment"
         android:name="com.isaruff.cryptotrackerapp.presentation.screens.rate_selection.RateSelectionFragment"
@@ -27,5 +31,8 @@
         <argument
             android:name="coin_details"
             app:argType="com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel" />
+        <action
+            android:id="@+id/action_rateSelectionFragment_to_cryptoHistoryFragment"
+            app:destination="@id/cryptoHistoryFragment" />
     </dialog>
 </navigation>

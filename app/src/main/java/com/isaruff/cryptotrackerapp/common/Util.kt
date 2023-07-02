@@ -5,9 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigator
 import com.google.gson.Gson
-import com.isaruff.cryptotrackerapp.data.remote.dto.CoinDataResponse
-import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
-import org.json.JSONObject
+import com.google.gson.reflect.TypeToken
+import com.isaruff.cryptotrackerapp.data.remote.dto.SimpleCoinResponse
 import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -15,22 +14,19 @@ import java.util.Locale
 import java.util.TimeZone
 
 
-
-fun getSingleCoinObject(jsonString: String, topLevelKey: String): CoinDataResponse? {
-    //Turn string into a JSON Object
-    /**
-     * The server returns dynamic object name for each request,
-     * Thus, making it difficult to cast into a simple data class
-     */
-    val trimmedJsonString = jsonString.trimIndent()
-    val jsonObject = JSONObject(trimmedJsonString)
-    val result = jsonObject.getJSONObject(topLevelKey)
-
-    //Cast it into a Data Class to work later
+fun parseSimpleCoinResponse(json: String): List<SimpleCoinResponse> {
     val gson = Gson()
-    return gson.fromJson(result.toString(), CoinDataResponse::class.java)
-
+    val coinDataMap = gson.fromJson<Map<String, Map<String, String>>>(json.trimIndent(), object : TypeToken<Map<String, Map<String, String>>>() {}.type)
+    val coinDataList = mutableListOf<SimpleCoinResponse>()
+    for ((coinName, coin) in coinDataMap) {
+        val usdValue = coin["usd"]?.toDoubleOrNull()
+        if (usdValue != null) {
+            coinDataList.add(SimpleCoinResponse(coinName, usdValue))
+        }
+    }
+    return coinDataList
 }
+
 
 fun convertUTCtoLocal(utcTime: String): String {
     val utcFormat =
@@ -49,14 +45,17 @@ fun convertUTCtoLocal(utcTime: String): String {
 }
 
 //Avoiding crashing while Navigating in very rapid manner
-fun NavController.safeNavigate(directions: NavDirections, extras: Navigator.Extras?=null){
+fun NavController.safeNavigate(directions: NavDirections, extras: Navigator.Extras? = null) {
     try {
-        if (extras==null){
+        if (extras == null) {
             this.navigate(directions)
-        } else{
+        } else {
             this.navigate(directions, extras)
         }
-    }catch (e:Exception){
+    } catch (e: Exception) {
         Log.e("NAVIGATION_ERROR", e.toString())
     }
 }
+
+
+

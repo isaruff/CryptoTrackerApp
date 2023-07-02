@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class CoinDetailsModel(
     val id: String,
     val name: String,
-    val image: String
+    val image: String,
+    val idWithCurrency: String
 ): Parcelable

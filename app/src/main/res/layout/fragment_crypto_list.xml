@@ -78,13 +78,26 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonCurrencyUSD"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:layout_weight="1"
+                android:text="Dollar"
+                android:textSize="10sp"
+                app:rippleColor="@color/green"
+                app:strokeColor="@color/green"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonCurrencyBitcoin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:text="Bitcoin"
-                android:textSize="12sp"
+                android:textSize="10sp"
+                app:rippleColor="@color/orange"
                 app:strokeColor="@color/orange"
                 app:strokeWidth="2dp" />
 
@@ -95,8 +108,9 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:text="Ripple"
-                android:textSize="12sp"
-                app:strokeColor="@color/green"
+                android:textSize="10sp"
+                app:rippleColor="@color/blue"
+                app:strokeColor="@color/blue"
                 app:strokeWidth="2dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -106,7 +120,8 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_weight="1"
                 android:text="Ethereum"
-                android:textSize="12sp"
+                android:textSize="10sp"
+                app:rippleColor="@color/purple"
                 app:strokeColor="@color/purple"
                 app:strokeWidth="2dp" />
         </LinearLayout>

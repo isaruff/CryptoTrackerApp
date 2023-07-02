@@ -29,6 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
+            android:fontFamily="@font/kanit_light"
             android:text="Pick exchange rate range"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/kanit_light"
             android:text="Minimum value"
             android:textColor="@color/green"
             android:textSize="20sp"
@@ -62,6 +64,7 @@
                 android:id="@+id/editTextMin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/kanit_light"
                 android:hint="Minimum value in USD"
                 android:inputType="number"
                 android:textColor="@color/color_primary"
@@ -75,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/kanit_light"
             android:text="Maximum value"
             android:textColor="@color/green"
             android:textSize="20sp"
@@ -95,6 +99,7 @@
                 android:id="@+id/editTextMax"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/kanit_light"
                 android:hint="Maximum value in USD"
                 android:inputType="number"
                 android:textColor="@color/color_primary"
@@ -105,7 +110,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSave"
+            android:id="@+id/buttonUpsert"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -113,13 +118,13 @@
             android:text="Save"
             android:textAllCaps="false"
             android:textColor="@color/white"
+            app:backgroundTint="@color/color_primary"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textInputLayoutMax"
             app:layout_constraintVertical_bias="1"
             app:rippleColor="#8DEB5E28"
-            app:backgroundTint="@color/color_primary"
             app:strokeColor="@color/color_tertiary"
             app:strokeWidth="2dp" />
 
@@ -129,18 +134,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:text="Go to History"
+            android:text="History"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            app:cornerRadius="15dp"
             app:backgroundTint="@color/color_primary"
+            app:cornerRadius="15dp"
+            app:layout_constraintStart_toEndOf="@id/buttonDelete"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/buttonSave"
+            app:layout_constraintEnd_toStartOf="@id/buttonUpsert"
             app:layout_constraintTop_toBottomOf="@id/textInputLayoutMax"
             app:layout_constraintVertical_bias="1"
             app:rippleColor="#8DEB5E28"
             app:strokeColor="@color/color_tertiary"
             app:strokeWidth="2dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Unfollow"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/color_primary"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonShowHistory"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutMax"
+            app:layout_constraintVertical_bias="1"
+            app:rippleColor="#8DEB5E28"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/color_tertiary"
+            app:strokeWidth="2dp" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

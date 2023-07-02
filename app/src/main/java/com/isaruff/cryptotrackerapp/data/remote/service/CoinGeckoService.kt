@@ -10,7 +10,8 @@ interface CoinGeckoService {
     @GET("coins/markets")
     suspend fun getCoinMarkets(
         @Query("vs_currency") currency: String,
-        @Query("ids") ids: String? = "bitcoin",
+        @Query("ids") ids: String?,
+        @Query("sparkline") sparkline: Boolean?,
         @Query("order") order: String?,
         @Query("per_page") perPage: Int?,
         @Query("page") page: Int?,
@@ -20,5 +21,8 @@ interface CoinGeckoService {
     ): Response<List<CoinMarketResponse>>
 
     @GET("simple/price")
-    suspend fun getCoinData(): Response<String>
+    suspend fun getSimpleCoinData(
+        @Query("vs_currencies") currencies: String = "usd",
+        @Query("ids") ids: String
+    ): Response<String>
 }
