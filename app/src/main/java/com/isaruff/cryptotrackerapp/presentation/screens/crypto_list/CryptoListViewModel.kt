@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaruff.cryptotrackerapp.common.Resource
 import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
+import com.isaruff.cryptotrackerapp.common.setIdWithCurrency
 import com.isaruff.cryptotrackerapp.data.local.entities.CoinMarketsCacheEntity
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
 import com.isaruff.cryptotrackerapp.data.mapper.toCoinListModel
@@ -49,9 +50,8 @@ class CryptoListViewModel @Inject constructor(
             val currency = _selectedCurrency.value.currency
             _coinListState.value = Resource.Loading()
             getCacheCoinsUseCase.invoke(currency).collect {
-                val convertedList = mutableListOf<CoinListModel>()
-                it.forEach { coinCache ->
-                    convertedList.add(coinCache.toCoinListModel())
+                val convertedList = it.map { cache ->
+                    cache.toCoinListModel()
                 }
                 _coinListCache.value = convertedList
                 _coinListState.value = Resource.Success(data = convertedList)
@@ -70,8 +70,7 @@ class CryptoListViewModel @Inject constructor(
                     lastUpdated = coinListModel.lastUpdated,
                     currency = currency,
                     currentPrice = coinListModel.currentPrice,
-                    idWithCurrency = "${currency}_${coinListModel.id}",
-                    sparklineList = coinListModel.sparklineList
+                    idWithCurrency = setIdWithCurrency(id = coinListModel.id, currency = coinListModel.currency)
                 )
             )
         }
@@ -122,7 +121,7 @@ class CryptoListViewModel @Inject constructor(
                         )
                         try {
                             getCacheFromDatabase()
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             Log.d("Cache_error", "$e")
                         }
 
@@ -130,13 +129,17 @@ class CryptoListViewModel @Inject constructor(
 
                     is Resource.Loading -> _coinListState.value = Resource.Loading()
                     is Resource.Success -> {
-                        val coinListModel = mutableListOf<CoinListModel>()
-                        it.data?.forEach { coinMarketResponse ->
-                            coinListModel.add(element = coinMarketResponse.toCoinListModel())
-                            setCacheToDatabase(coinListModel = coinMarketResponse.toCoinListModel())
+                        it.data?.let { listResponse ->
+                            val finalList = listResponse.map { marketResponse ->
+                                marketResponse.toCoinListModel()
+                            }
+                            finalList.forEach {
+                                setCacheToDatabase(it)
+                            }
+                            _coinListCache.value = finalList
+                            _coinListState.value = Resource.Success(data = finalList)
+
                         }
-                        _coinListCache.value = coinListModel
-                        _coinListState.value = Resource.Success(data = coinListModel)
 
                     }
                 }

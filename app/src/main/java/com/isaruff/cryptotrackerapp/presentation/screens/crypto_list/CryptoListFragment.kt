@@ -11,6 +11,8 @@ import com.isaruff.cryptotrackerapp.common.Resource
 import com.isaruff.cryptotrackerapp.common.convertUTCtoLocal
 import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
 import com.isaruff.cryptotrackerapp.common.safeNavigate
+import com.isaruff.cryptotrackerapp.common.setIdWithCurrency
+import com.isaruff.cryptotrackerapp.data.notification.NotificationHandler
 import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoListBinding
 import com.isaruff.cryptotrackerapp.databinding.ItemCryptoCoinBinding
 import com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel
@@ -26,36 +28,8 @@ class CryptoListFragment :
 
     private val viewModel: CryptoListViewModel by viewModels()
     private lateinit var selectedCurrency: CurrencyTypes
+    private lateinit var coinListAdapter: CoinListAdapter
 
-    private val coinMarketsAdapter by lazy {
-        GenericListAdapter<CoinListModel, ItemCryptoCoinBinding>(
-            inflate = ItemCryptoCoinBinding::inflate,
-            onBind = { data, _ ->
-                imageViewCoin.load(data.image)
-                textViewCoinName.text = data.name
-                textViewLastUpdated.text = convertUTCtoLocal(data.lastUpdated)
-                textViewCoinPrice.text = data.currentPrice.toString()
-                imageViewCoinStatus.changeBackgroundColor(
-                    requireContext(), selectedCurrency.currencyColor
-                )
-
-                this.root.setOnClickListener {
-                    findNavController().safeNavigate(
-                        directions = CryptoListFragmentDirections.actionCryptoListFragmentToRateSelectionFragment(
-                            coinDetails = CoinDetailsModel(
-                                id = data.id,
-                                name = data.name,
-                                image = data.image,
-                                idWithCurrency = "${data.currency}_${data.id}"
-                            )
-                        )
-                    )
-                }
-
-
-            }
-        )
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,10 +47,33 @@ class CryptoListFragment :
 
 
     private fun setupRecyclerView() {
-        binding.recyclerViewCoinList.apply {
-            adapter = coinMarketsAdapter
-            setHasFixedSize(true)
-            setItemViewCacheSize(15)
+        observeState(viewModel.selectedCurrency) { currency ->
+            binding.recyclerViewCoinList.apply {
+                coinListAdapter = CoinListAdapter(
+                    changeCurrencyColor = { imageView ->
+                        imageView.changeBackgroundColor(requireContext(), currency.currencyColor)
+                    },
+                    onClickListener = { itemData ->
+                        findNavController().safeNavigate(
+                            directions = CryptoListFragmentDirections.actionCryptoListFragmentToRateSelectionFragment(
+                                CoinDetailsModel(
+                                    id = itemData.id,
+                                    name = itemData.name,
+                                    image = itemData.image,
+                                    idWithCurrency = setIdWithCurrency(
+                                        id = itemData.id,
+                                        currency = itemData.currency
+                                    )
+                                )
+                            )
+                        )
+                    }
+                )
+                adapter = coinListAdapter
+                setHasFixedSize(true)
+            }
+
+
         }
         observeState(viewModel.coinListState) {
             when (it) {
@@ -96,7 +93,7 @@ class CryptoListFragment :
                 is Resource.Success -> {
                     binding.root.isEnabled = true
                     binding.progressBar.root.visibility = View.GONE
-                    coinMarketsAdapter.submitList(it.data ?: emptyList())
+                    coinListAdapter.submitList(it.data ?: emptyList())
                 }
             }
         }
@@ -131,7 +128,7 @@ class CryptoListFragment :
         binding.editTextSearch.addTextChangedListener { searchText ->
             viewModel.searchCoin(searchText.toString())
             observeState(viewModel.coinSearchResult) {
-                coinMarketsAdapter.submitList(it)
+                coinListAdapter.submitList(it)
             }
 
         }

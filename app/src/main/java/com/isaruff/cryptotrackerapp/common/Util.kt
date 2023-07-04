@@ -57,5 +57,8 @@ fun NavController.safeNavigate(directions: NavDirections, extras: Navigator.Extr
     }
 }
 
+fun setIdWithCurrency(id: String, currency: String): String{
+    return "${currency}_${id}"
+}
 
 

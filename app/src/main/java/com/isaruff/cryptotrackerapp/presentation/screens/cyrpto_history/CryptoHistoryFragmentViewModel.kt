@@ -25,7 +25,7 @@ class CryptoHistoryFragmentViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val coin = getCacheCoinById.invoke(uniqueId)
             coin.collect{
-                _coinHistoryList.value = it.sparklineList
+//                _coinHistoryList.value = it.sparklineList
             }
 
         }

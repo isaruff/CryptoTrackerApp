@@ -1,8 +1,11 @@
 package com.isaruff.cryptotrackerapp.presentation.screens.rate_selection
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkRequest
 import com.isaruff.cryptotrackerapp.data.local.entities.TrackedCoinEntity
+import com.isaruff.cryptotrackerapp.data.worker.CoinTrackerScheduler
 import com.isaruff.cryptotrackerapp.domain.use_cases.DeleteTrackedCoinUseCase
 import com.isaruff.cryptotrackerapp.domain.use_cases.GetTrackedCoinByIdUseCase
 import com.isaruff.cryptotrackerapp.domain.use_cases.UpsertTrackedCoinUseCase
@@ -42,6 +45,11 @@ class RateSelectionViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             deleteTrackedCoinUseCase.invoke(entity = trackedCoinEntity)
         }
+    }
+
+
+    fun initCoinTracker(context: Context){
+        CoinTrackerScheduler.refreshPeriodicWork(context)
     }
 
 }

@@ -13,8 +13,7 @@ fun CoinMarketResponse.toCoinListModel(): CoinListModel {
         lastUpdated = lastUpdated,
         name = name,
         currentPrice = currentPrice,
-        currency = "",
-        sparklineList = sparklineIn7Days.price
+        currency = ""
     )
 }
 
@@ -25,8 +24,7 @@ fun CoinMarketsCacheEntity.toCoinListModel(): CoinListModel{
         lastUpdated = lastUpdated,
         name = name,
         currentPrice = currentPrice,
-        currency = currency,
-        sparklineList = sparklineList
+        currency = currency
     )
 }
 

@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-
+/**
+ * Use With Caution. Only applicable to Items that are simple, otherwise you can suffer from frame drops
+ * */
 class GenericListAdapter<D : Any, VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB,
     private val onBind: VB.(data: D, position: Int) -> Unit,

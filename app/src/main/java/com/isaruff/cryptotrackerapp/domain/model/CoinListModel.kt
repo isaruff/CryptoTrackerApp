@@ -1,7 +1,7 @@
 package com.isaruff.cryptotrackerapp.domain.model
 
-import com.google.gson.annotations.SerializedName
-import com.isaruff.cryptotrackerapp.data.remote.dto.SparklineList
+import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
+
 
 data class CoinListModel(
     val id: String,
@@ -10,5 +10,4 @@ data class CoinListModel(
     val name: String,
     val currentPrice: Double,
     val currency: String,
-    val sparklineList: List<Double>
 )

@@ -7,7 +7,7 @@ data class CoinMarketsDto(
     var order: String = "market_cap_asc",
     var page: Int?= null,
     var perPage: Int? = null,
-    var sparkline: Boolean = true,
+    var sparkline: Boolean = false,
     var priceChangePercentage: String? = null,
     var locale: String = "en",
     var precision: String? = null
