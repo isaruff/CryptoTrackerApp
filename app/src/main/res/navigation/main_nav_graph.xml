@@ -20,7 +20,7 @@
         android:label="fragment_crypto_history"
         tools:layout="@layout/fragment_crypto_history" >
         <argument
-            android:name="coin_id"
+            android:name="coinId"
             app:argType="string" />
     </fragment>
     <dialog
@@ -29,7 +29,7 @@
         android:label="fragment_rate_selection"
         tools:layout="@layout/fragment_rate_selection" >
         <argument
-            android:name="coin_details"
+            android:name="coinDetails"
             app:argType="com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel" />
         <action
             android:id="@+id/action_rateSelectionFragment_to_cryptoHistoryFragment"
