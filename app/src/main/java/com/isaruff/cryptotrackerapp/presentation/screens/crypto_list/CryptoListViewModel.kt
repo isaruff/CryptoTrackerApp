@@ -91,7 +91,7 @@ class CryptoListViewModel @Inject constructor(
     }
 
     fun setCurrency(currency: CurrencyTypes) {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             _selectedCurrency.value = currency
         }
 
@@ -131,16 +131,18 @@ class CryptoListViewModel @Inject constructor(
                     is Resource.Success -> {
                         it.data?.let { listResponse ->
                             val finalList = listResponse.map { marketResponse ->
-                                marketResponse.toCoinListModel()
-                            }
-                            finalList.forEach {
-                                setCacheToDatabase(it)
+                                marketResponse.toCoinListModel(
+                                    _selectedCurrency.value.currency
+                                )
                             }
                             _coinListCache.value = finalList
                             _coinListState.value = Resource.Success(data = finalList)
 
-                        }
+                            finalList.forEach {
+                                setCacheToDatabase(it)
+                            }
 
+                        }
                     }
                 }
             }

@@ -55,7 +55,7 @@ object CoinListDiffCallback : DiffUtil.ItemCallback<CoinListModel>() {
     }
 
     override fun areContentsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id && oldItem.name == newItem.name
     }
 
 }

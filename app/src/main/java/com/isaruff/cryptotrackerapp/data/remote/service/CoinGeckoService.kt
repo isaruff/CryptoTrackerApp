@@ -22,7 +22,7 @@ interface CoinGeckoService {
 
     @GET("simple/price")
     suspend fun getSimpleCoinData(
-        @Query("vs_currencies") currencies: String = "usd",
+        @Query("vs_currencies") currencies: String,
         @Query("ids") ids: String
-    ): Response<String>
+    ): okhttp3.ResponseBody
 }

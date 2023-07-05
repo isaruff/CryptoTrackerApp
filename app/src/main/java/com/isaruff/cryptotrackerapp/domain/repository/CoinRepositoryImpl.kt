@@ -24,7 +24,7 @@ class CoinRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getSimpleCoinData(currencies: String, ids: String): Response<String> {
+    override suspend fun getSimpleCoinData(currencies: String, ids: String): okhttp3.ResponseBody {
         return coinApi.getSimpleCoinData(currencies, ids)
     }
 

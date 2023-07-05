@@ -8,7 +8,7 @@ interface CoinRepository {
 
     suspend fun getCoinMarkets(params: CoinMarketsDto): Response<List<CoinMarketResponse>>
 
-    suspend fun getSimpleCoinData(currencies: String = "usd", ids: String): Response<String>
+    suspend fun getSimpleCoinData(currencies: String = "usd", ids: String): okhttp3.ResponseBody
 
 
 }

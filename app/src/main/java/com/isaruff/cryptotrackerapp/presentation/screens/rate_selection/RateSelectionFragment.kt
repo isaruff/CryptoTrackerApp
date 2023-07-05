@@ -26,10 +26,17 @@ class RateSelectionFragment :
 
     private val args: RateSelectionFragmentArgs by navArgs()
     private val viewModel: RateSelectionViewModel by viewModels()
+    private var buttonText = ""
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {}
+    ) {isGranted ->
+        if (isGranted){
+            buttonText = "Save"
+        } else{
+            buttonText = "Enable"
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +44,7 @@ class RateSelectionFragment :
 
         binding.initClickListeners()
         binding.checkPreviousCoinRecord()
+        binding.buttonUpsert.text = buttonText
 
     }
 
