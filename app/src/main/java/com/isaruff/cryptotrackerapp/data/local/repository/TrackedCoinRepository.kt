@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TrackedCoinRepository {
 
-    fun getTrackedCoinById(id: String): Flow<TrackedCoinEntity>
+    suspend fun getTrackedCoinById(id: String): Flow<TrackedCoinEntity>
 
     suspend fun upsertTrackableCoin(coin: TrackedCoinEntity)
 

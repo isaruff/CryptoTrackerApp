@@ -9,7 +9,7 @@ import javax.inject.Inject
 class TrackedCoinRepositoryImpl @Inject constructor(
     private val dao: TrackedCoinDao
 ) : TrackedCoinRepository {
-    override fun getTrackedCoinById(id: String): Flow<TrackedCoinEntity> {
+    override suspend fun getTrackedCoinById(id: String): Flow<TrackedCoinEntity> {
         return dao.getTrackedCoinById(id)
     }
 

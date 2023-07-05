@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.isaruff.cryptotrackerapp.common.safeNavigate
 import com.isaruff.cryptotrackerapp.data.local.entities.TrackedCoinEntity
-import com.isaruff.cryptotrackerapp.data.notification.NotificationHandler
 import com.isaruff.cryptotrackerapp.databinding.FragmentRateSelectionBinding
 import com.isaruff.cryptotrackerapp.presentation.base.BaseBottomSheetFragment
 import com.isaruff.cryptotrackerapp.presentation.views.toEditable
@@ -27,15 +26,12 @@ class RateSelectionFragment :
     private val args: RateSelectionFragmentArgs by navArgs()
     private val viewModel: RateSelectionViewModel by viewModels()
     private var buttonText = ""
-
+    private var permissionGranted: Boolean = false
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {isGranted ->
-        if (isGranted){
-            buttonText = "Save"
-        } else{
-            buttonText = "Enable"
-        }
+    ) { isGranted ->
+        permissionGranted = isGranted
+        buttonText = if (isGranted) "Save" else "Enable"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +40,6 @@ class RateSelectionFragment :
 
         binding.initClickListeners()
         binding.checkPreviousCoinRecord()
-        binding.buttonUpsert.text = buttonText
 
     }
 
@@ -71,11 +66,13 @@ class RateSelectionFragment :
             if (it == null) {
                 buttonUpsert.text = "Save"
                 buttonDelete.visibility = View.GONE
+                buttonShowHistory.visibility = View.GONE
             } else {
                 buttonUpsert.text = "Update"
                 editTextMax.text = it.maxValue.toString().toEditable()
                 editTextMin.text = it.minValue.toString().toEditable()
                 buttonDelete.visibility = View.VISIBLE
+                buttonShowHistory.visibility = View.VISIBLE
             }
         }
     }
@@ -84,7 +81,8 @@ class RateSelectionFragment :
         buttonUpsert.setOnClickListener {
             if (isInputValid()) {
                 viewModel.startTrackingCoin(getTrackedCoinDetails())
-                handleNotification {
+                askNotificationPermission()
+                if (permissionGranted) {
                     viewModel.initCoinTracker(requireContext())
                 }
             }
@@ -95,7 +93,7 @@ class RateSelectionFragment :
         buttonShowHistory.setOnClickListener {
             findNavController().safeNavigate(
                 directions = RateSelectionFragmentDirections.actionRateSelectionFragmentToCryptoHistoryFragment(
-                    args.coinDetails.idWithCurrency
+                    args.coinDetails.id
                 )
             )
         }
@@ -111,24 +109,27 @@ class RateSelectionFragment :
         }
     }
 
-    private fun handleNotification(action: () -> Unit) {
+    private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     requireActivity(), Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                action.invoke()
+                binding.buttonUpsert.text = "Save"
+                permissionGranted = true
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 Toast.makeText(
                     requireContext(),
-                    "To update you about coin prices you should activate notifications",
+                    "To update you about coin prices you should activate notifications.",
                     Toast.LENGTH_SHORT
                 ).show()
+                binding.buttonUpsert.text = "Enable"
             } else {
+                binding.buttonUpsert.text = "Enable"
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            action.invoke()
+            permissionGranted = true
         }
     }
 

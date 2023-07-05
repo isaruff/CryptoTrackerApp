@@ -20,7 +20,7 @@
         android:label="fragment_crypto_history"
         tools:layout="@layout/fragment_crypto_history" >
         <argument
-            android:name="id_with_currency"
+            android:name="coin_id"
             app:argType="string" />
     </fragment>
     <dialog
