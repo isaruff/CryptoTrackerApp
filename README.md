@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style>
-    h1, h2, h3, h4, h5, h6 {
-      background-color: #f2f2f2;
-      padding: 10px;
-    }
-  </style>
 </head>
 <body>
   <h1>CryptoCurrencyApp</h1>
