@@ -1,9 +1,9 @@
-package com.isaruff.cryptotrackerapp.domain.repository
+package com.isaruff.cryptotrackerapp.data.remote.repository
 
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
 import com.isaruff.cryptotrackerapp.data.remote.service.CoinGeckoService
-import com.isaruff.cryptotrackerapp.data.remote.repository.CoinRepository
+import com.isaruff.cryptotrackerapp.domain.repository.CoinRepository
 import retrofit2.Response
 import javax.inject.Inject
 

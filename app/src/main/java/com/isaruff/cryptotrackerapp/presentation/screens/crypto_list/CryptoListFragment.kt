@@ -5,21 +5,15 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.isaruff.cryptotrackerapp.common.Resource
-import com.isaruff.cryptotrackerapp.common.convertUTCtoLocal
+import com.isaruff.cryptotrackerapp.common.changeBackgroundColor
 import com.isaruff.cryptotrackerapp.common.enums.CurrencyTypes
 import com.isaruff.cryptotrackerapp.common.safeNavigate
 import com.isaruff.cryptotrackerapp.common.setIdWithCurrency
-import com.isaruff.cryptotrackerapp.data.notification.NotificationHandler
 import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoListBinding
-import com.isaruff.cryptotrackerapp.databinding.ItemCryptoCoinBinding
 import com.isaruff.cryptotrackerapp.domain.model.CoinDetailsModel
-import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
-import com.isaruff.cryptotrackerapp.presentation.adapter.GenericListAdapter
 import com.isaruff.cryptotrackerapp.presentation.base.BaseFragment
-import com.isaruff.cryptotrackerapp.presentation.views.changeBackgroundColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

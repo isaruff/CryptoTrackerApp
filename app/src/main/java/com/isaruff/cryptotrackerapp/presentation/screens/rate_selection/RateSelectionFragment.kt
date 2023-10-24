@@ -12,11 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.isaruff.cryptotrackerapp.R
 import com.isaruff.cryptotrackerapp.common.safeNavigate
+import com.isaruff.cryptotrackerapp.common.toEditable
 import com.isaruff.cryptotrackerapp.data.local.entities.TrackedCoinEntity
 import com.isaruff.cryptotrackerapp.databinding.FragmentRateSelectionBinding
 import com.isaruff.cryptotrackerapp.presentation.base.BaseBottomSheetFragment
-import com.isaruff.cryptotrackerapp.presentation.views.toEditable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +32,8 @@ class RateSelectionFragment :
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         permissionGranted = isGranted
-        buttonText = if (isGranted) "Save" else "Enable"
+        buttonText =
+            if (isGranted) getString(R.string.text_save) else getString(R.string.text_enable)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,11 +66,11 @@ class RateSelectionFragment :
         viewModel.getCoinDetails(args.coinDetails.id)
         observeState(viewModel.coinDetailsState) {
             if (it == null) {
-                buttonUpsert.text = "Save"
+                buttonUpsert.text = getString(R.string.text_save)
                 buttonDelete.visibility = View.GONE
                 buttonShowHistory.visibility = View.GONE
             } else {
-                buttonUpsert.text = "Update"
+                buttonUpsert.text = getString(R.string.text_update)
                 editTextMax.text = it.maxValue.toString().toEditable()
                 editTextMin.text = it.minValue.toString().toEditable()
                 buttonDelete.visibility = View.VISIBLE
@@ -101,7 +103,10 @@ class RateSelectionFragment :
 
     private fun FragmentRateSelectionBinding.isInputValid(): Boolean {
         return if (editTextMax.text.toString().isBlank() || editTextMax.text.toString().isBlank()) {
-            Toast.makeText(requireContext(), "Cannot leave the fields empty", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT
+            )
                 .show()
             false
         } else {
@@ -115,17 +120,17 @@ class RateSelectionFragment :
                     requireActivity(), Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                binding.buttonUpsert.text = "Save"
+                binding.buttonUpsert.text = getString(R.string.text_save)
                 permissionGranted = true
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 Toast.makeText(
                     requireContext(),
-                    "To update you about coin prices you should activate notifications.",
+                    getString(R.string.msg_notification),
                     Toast.LENGTH_SHORT
                 ).show()
-                binding.buttonUpsert.text = "Enable"
+                binding.buttonUpsert.text = getString(R.string.text_enable)
             } else {
-                binding.buttonUpsert.text = "Enable"
+                binding.buttonUpsert.text = getString(R.string.text_enable)
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {

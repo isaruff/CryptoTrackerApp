@@ -1,11 +1,11 @@
 package com.isaruff.cryptotrackerapp.di
 
-import com.isaruff.cryptotrackerapp.data.local.repository.CoinMarketsCacheRepository
-import com.isaruff.cryptotrackerapp.data.local.repository.TrackedCoinRepository
-import com.isaruff.cryptotrackerapp.data.remote.repository.CoinRepository
-import com.isaruff.cryptotrackerapp.domain.repository.CoinMarketsCacheRepositoryImpl
-import com.isaruff.cryptotrackerapp.domain.repository.CoinRepositoryImpl
-import com.isaruff.cryptotrackerapp.domain.repository.TrackedCoinRepositoryImpl
+import com.isaruff.cryptotrackerapp.data.local.repository.CoinMarketsCacheRepositoryImpl
+import com.isaruff.cryptotrackerapp.data.local.repository.TrackedCoinRepositoryImpl
+import com.isaruff.cryptotrackerapp.data.remote.repository.CoinRepositoryImpl
+import com.isaruff.cryptotrackerapp.domain.repository.CoinMarketsCacheRepository
+import com.isaruff.cryptotrackerapp.domain.repository.CoinRepository
+import com.isaruff.cryptotrackerapp.domain.repository.TrackedCoinRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

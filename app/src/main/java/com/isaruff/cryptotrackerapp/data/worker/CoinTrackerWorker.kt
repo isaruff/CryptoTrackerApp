@@ -38,9 +38,7 @@ class CoinTrackerWorker @AssistedInject constructor(
                 trackedCoinIds.add(coinEntity.id)
             }
             val idsJoined = trackedCoinIds.joinToString(",")
-            println("IDS ${idsJoined}")
             val response = remoteApi.getSimpleCoinData(currencies = "usd", ids = idsJoined).string()
-            println("RESPONSE ${response}")
             parseSimpleCoinResponse(response).forEach { parsedResponse ->
                 val trackedCoinEntity = list.find { it.id == parsedResponse.coin }
                 checkCoinAlertValue(

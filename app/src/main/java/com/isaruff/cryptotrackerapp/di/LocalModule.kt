@@ -5,8 +5,8 @@ import androidx.room.Room
 import com.isaruff.cryptotrackerapp.data.local.dao.CoinMarketsCacheDao
 import com.isaruff.cryptotrackerapp.data.local.dao.TrackedCoinDao
 import com.isaruff.cryptotrackerapp.data.local.room.CoinDatabase
-import com.isaruff.cryptotrackerapp.data.local.type_converter.ListDoubleConverter
-import com.isaruff.cryptotrackerapp.data.local.type_converter.ListStringConverter
+import com.isaruff.cryptotrackerapp.data.local.room.type_converter.ListDoubleConverter
+import com.isaruff.cryptotrackerapp.data.local.room.type_converter.ListStringConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

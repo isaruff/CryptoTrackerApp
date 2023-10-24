@@ -1,5 +1,22 @@
 <resources>
-    <string name="app_name">CryptoTrackerApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">CoinGecko</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_save">Save</string>
+    <string name="text_enable">Enable</string>
+    <string name="msg_notification">To update you about coin prices you should activate notifications.</string>
+    <string name="warning_empty_fields">Cannot leave the fields empty</string>
+    <string name="text_update">Update</string>
+    <string name="text_search_coin">Search coin</string>
+    <string name="text_usd">Dollar</string>
+    <string name="text_bitcoin">Bitcoin</string>
+    <string name="text_ethereum">Ethereum</string>
+    <string name="text_while_away">While you were gone</string>
+    <string name="title_coin_history">Coin History</string>
+    <string name="action_pick_rate">Pick exchange rate range</string>
+    <string name="text_min_value">Minimum value</string>
+    <string name="text_min_value_in_usd">Minimum value in USD</string>
+    <string name="text_max_value">Maximum value</string>
+    <string name="text_max_value_in_usd">Maximum value in USD</string>
+    <string name="text_history">History</string>
+    <string name="text_unfollow">Unfollow</string>
 </resources>

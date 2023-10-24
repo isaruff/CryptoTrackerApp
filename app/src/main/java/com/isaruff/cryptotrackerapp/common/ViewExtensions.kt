@@ -1,4 +1,4 @@
-package com.isaruff.cryptotrackerapp.presentation.views
+package com.isaruff.cryptotrackerapp.common
 
 import android.content.Context
 import android.content.res.ColorStateList

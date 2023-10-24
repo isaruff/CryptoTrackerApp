@@ -10,9 +10,9 @@ import com.isaruff.cryptotrackerapp.data.local.entities.CoinMarketsCacheEntity
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
 import com.isaruff.cryptotrackerapp.data.mapper.toCoinListModel
 import com.isaruff.cryptotrackerapp.domain.model.CoinListModel
-import com.isaruff.cryptotrackerapp.domain.use_cases.GetCacheCoinsUseCase
+import com.isaruff.cryptotrackerapp.domain.use_cases.cache_coin.GetCacheCoinsUseCase
 import com.isaruff.cryptotrackerapp.domain.use_cases.GetCoinListUseCase
-import com.isaruff.cryptotrackerapp.domain.use_cases.UpsertCacheCoinUseCase
+import com.isaruff.cryptotrackerapp.domain.use_cases.cache_coin.UpsertCacheCoinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

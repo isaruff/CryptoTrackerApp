@@ -1,4 +1,4 @@
-package com.isaruff.cryptotrackerapp.data.local.type_converter
+package com.isaruff.cryptotrackerapp.data.local.room.type_converter
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter

@@ -5,11 +5,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartAnimationType
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartFontWeightType
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
 import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAStyle
+import com.isaruff.cryptotrackerapp.R
 import com.isaruff.cryptotrackerapp.databinding.FragmentCryptoHistoryBinding
 import com.isaruff.cryptotrackerapp.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +26,6 @@ class CryptoHistoryFragment :
         super.onViewCreated(view, savedInstanceState)
         viewModel.getHistoryByCoinId(args.coinId)
         observeData()
-
     }
 
     private fun observeData() {
@@ -40,7 +39,7 @@ class CryptoHistoryFragment :
         val aaChartModel = AAChartModel()
         aaChartModel.apply {
             chartType(AAChartType.Line)
-            title("While you were gone")
+            title(getString(R.string.text_while_away))
             titleStyle(AAStyle.Companion.style(color = "#EB5E28"))
             subtitle(args.coinId)
             subtitleStyle(AAStyle.Companion.style(color = "#EB5E28"))

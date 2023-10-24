@@ -1,6 +1,5 @@
-package com.isaruff.cryptotrackerapp.data.local.repository
+package com.isaruff.cryptotrackerapp.domain.repository
 
-import com.isaruff.cryptotrackerapp.data.local.entities.CoinMarketsCacheEntity
 import com.isaruff.cryptotrackerapp.data.local.entities.TrackedCoinEntity
 import kotlinx.coroutines.flow.Flow
 

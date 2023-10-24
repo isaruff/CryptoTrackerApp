@@ -3,7 +3,7 @@ package com.isaruff.cryptotrackerapp.domain.use_cases
 import com.isaruff.cryptotrackerapp.common.Resource
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
-import com.isaruff.cryptotrackerapp.data.remote.repository.CoinRepository
+import com.isaruff.cryptotrackerapp.domain.repository.CoinRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

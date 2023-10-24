@@ -1,4 +1,4 @@
-package com.isaruff.cryptotrackerapp.data.remote.repository
+package com.isaruff.cryptotrackerapp.domain.repository
 
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketResponse
 import com.isaruff.cryptotrackerapp.data.remote.dto.CoinMarketsDto
